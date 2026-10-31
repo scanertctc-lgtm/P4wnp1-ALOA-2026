@@ -1,0 +1,44 @@
+###On connecte le raspberry pi sur le PC, puis on se connect via le terminal en SSH:
+ssh root@172.16.0.1
+si c'est la première fois, une key fingerprint en SHA256 doit être générée, taper "yes".
+Puis taper le mot de passe "toor" (il faut le changer après par sécurité)
+
+Ensuite, voici la commande de base à taaper dans le terminal:
+P4wnP1_cli [command]
+P4wnP1_cli -h (ou --help) pour voir tous les menu de base
+
+Commande à faire pour que ça fonctionne avec un clavier fr:
+P4wnP1_cli hid run -c 'layout("fr");
+il faut taper ça au début de chauqe commande !
+
+
+
+###Pour faire une attaque HID, voici la commande de base:
+P4wnP1_cli hid run [command]
+
+Voici une commande pour avancer, on met le clavier en fr, et on tape la suite, avec ";" entre chaque étape.
+P4wnP1_cli hid run -c 'layout("fr"); type("Hello world")'
+
+on place tout entre '' comme au dessus pour qu'elle soit bien interprétée.
+
+le résultat:
+┌──(root㉿kali-raspberry-pi-zero-w-p4wnp1-aloa)-[~]
+└─# P4wnP1_cli hid run -c 'layout("fr"); type("Hello world")'
+TempFile created: /tmp/HIDscript054608952
+Start appending to 'HIDscript054608952' in folder 'TMP'
+HelloResult:
+null
+
+Si vous obtenez ça dans le terminal, alors c'est que ça marche.
+
+On complique un peu, on va lancer l'interpréteur de commande de windows avec cette commande:
+P4wnP1_cli hid run -c 'layout("fr"); press("GUI r"); delay(500); type("CMD"); press("ENTER");
+Si ça marche alors l'interpréteur de commande s'ouvre.
+
+On à utilisé : "press" qui sert à lancer une commande d'appui sur une touche du clavier (ou plusieurs, ici le la touche WINDOWS, et la touche R, pour ouvrir l'executeur)
+               "delay" qui sert à laisser du temps entre chaque commandes pour que toutes les étapes ai le temps d'être prises en compte (certains ordinateurs rament plus que d'autres donc il faut ajuster en fonction pour réussir les attaques
+               "type"  qui sert à rentrer des lettres ou des chiffres telles qu'ils sont écrits, ici ça va écrire C+M+D, donc CMD dans l'executeur
+               puis, "press" ENTER pour appuyer sur la touche entrée du clavier.
+
+C'est tout le temps comme ça qu'il faudra lancer les commandes.
+Toutes les touches, combinaisons sont possibles.
